@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView tvXAxis;
     private TextView tvYAxis;
     private TextView tvZAxis;
-    private EditText etBlendValue;
+    //private EditText etBlendValue;
 
     private OrientationFusion orientationFusion;
     private MeanFilter meanFilter;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onResume();
 
         reset();
+        orientationFusion.startFusion();
 
         sensorManager.registerListener(this, sensorManager
                         .getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onPause() {
         super.onPause();
 
+        orientationFusion.stopFusion();
         sensorManager.unregisterListener(this);
         handler.removeCallbacks(runnable);
     }
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //orientationFusion.setTimeConstant(0.5f);    // default
         ((OrientationComplimentaryFusion) orientationFusion).alpha = blendValue;*/
         orientationFusion = new OrientationKalmanFusion();
-        etBlendValue.setText(String.valueOf(blendValue));
+        //etBlendValue.setText(String.valueOf(blendValue));
 
         handler = new Handler();
         runnable = new Runnable() {
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         tvYAxis = (TextView) this.findViewById(R.id.value_y_axis_calibrated);
         tvZAxis = (TextView) this.findViewById(R.id.value_z_axis_calibrated);
 
-        etBlendValue = (EditText) this.findViewById(R.id.edittext_blend_value);
+        /*etBlendValue = (EditText) this.findViewById(R.id.edittext_blend_value);
         etBlendValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -152,6 +154,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     }
                 }
             }
-        });
+        });*/
     }
 }
