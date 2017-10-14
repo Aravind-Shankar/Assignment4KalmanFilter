@@ -102,9 +102,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i) {}
 
     private void reset() {
-        orientationFusion = new OrientationComplimentaryFusion();
+        /*orientationFusion = new OrientationComplimentaryFusion();
         //orientationFusion.setTimeConstant(0.5f);    // default
-        ((OrientationComplimentaryFusion) orientationFusion).alpha = blendValue;
+        ((OrientationComplimentaryFusion) orientationFusion).alpha = blendValue;*/
+        orientationFusion = new OrientationKalmanFusion();
         etBlendValue.setText(String.valueOf(blendValue));
 
         handler = new Handler();
