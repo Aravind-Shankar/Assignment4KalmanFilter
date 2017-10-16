@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Register for sensor updates.
         sensorManager.registerListener(this,
-                sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+                sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE_UNCALIBRATED),
                 SensorManager.SENSOR_DELAY_FASTEST);
 
         handler.post(runnable);
@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // Android reuses events, so you probably want a copy
             System.arraycopy(event.values, 0, magnetic, 0, event.values.length);
             orientationFusion.setMagneticField(this.magnetic);
-        } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
             // Android reuses events, so you probably want a copy
-            System.arraycopy(event.values, 0, rotation, 0, event.values.length);
+            System.arraycopy(event.values, 0, rotation, 0, 3);
             // Filter the rotation
             fusedOrientation = orientationFusion.filter(this.rotation);
 
